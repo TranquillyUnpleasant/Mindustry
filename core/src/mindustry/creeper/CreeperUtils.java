@@ -5,6 +5,7 @@ import arc.graphics.*;
 import arc.math.*;
 import arc.math.geom.*;
 import arc.struct.*;
+import arc.struct.EnumSet;
 import arc.util.Timer;
 import arc.util.*;
 import mindustry.content.*;
@@ -15,6 +16,7 @@ import mindustry.world.*;
 import mindustry.world.blocks.defense.*;
 import mindustry.world.blocks.environment.*;
 import mindustry.world.blocks.storage.*;
+import mindustry.world.meta.*;
 
 import java.util.*;
 
@@ -121,6 +123,13 @@ public class CreeperUtils {
         creeperBlocks.put(50, Blocks.coreNucleus);
 
         for(var set : creeperBlocks.entrySet()){
+            BlockFlag[] newFlags = new BlockFlag[set.getValue().flags.size() + 1];
+            int i = 0;
+            for (BlockFlag flag : set.getValue().flags) {
+                newFlags[i++] = flag;
+            }
+            newFlags[i] = BlockFlag.generator;
+            set.getValue().flags = EnumSet.of(newFlags);
             creeperLevels.put(set.getValue(), set.getKey());
         }
 
